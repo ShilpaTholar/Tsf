@@ -1,0 +1,81 @@
+Steps to create EC2 instance and  deploy your file
+Step1-Create an account in amazon aws and Login into the console using the email-id and password
+
+Step2-Click on Services and select EC2
+
+Step3-Click on launch instance
+
+Step4-Choose an Amazon Image Machine-(Select Amazon 2 AMI(HVM))
+
+Step5-Choose an instance type-Select t2micro type,with 1GB memory,1vCPU
+
+Step6-Configure the instance details-keep the number of instance as 1 and do not change the other default settings
+
+Step7-Add storage-add 8GB size
+
+Step8-Click on review and launch and review the instance details once again
+
+Step9-Click on launch and create a new key pair,set the key pair name and click on download key pair and launch the instance
+
+Step10-We can see the launched instance in the instances tab
+
+Step11-Open windows powershell and go to the downloads folder which contains the key pair(.pem file)
+
+Step12-To start the server click on connect,copy the dns name and paste it in powershell
+
+Step13-Now run the following commands
+
+sudo yum update
+cd ../..
+ls
+sudo su
+mkdir pizza
+cd pizza
+ls
+yum install wget
+
+wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u141-b15/336fa29ff2bb4ef291e347e091f7f4a7/jdk-8u141-linux-x64.rpm"
+
+ls
+yum install <jdk rpm file>
+ls
+Go to the browser and go to tomcat.apache.org,copy the link of tar.gz file
+wget <link address>
+ls
+tar xvfz <apache tomcat tar file>
+rm -r apache-tomcat-9.0.0.tar.gz
+rm -r jdk-8u141-linux-x64.rpm
+ls
+cd apache-tomcat-9.0.0
+ls
+cd bin
+ls
+./startup.sh
+ps -ef | grep tomcat
+wget http://localhost:8080/
+
+ls
+cd ../..
+ls
+cd apache-tomcat-8.5.54
+ls webapps/manager/META-INF/
+ls
+vi  webapps/manager/META-INF/context.xml
+ls
+
+Click on security group,Edit inbound rules, Set Custom tcp 8080 and  anywhere ipv4
+Go to browser and Go to manager app.We are unable to sign in
+
+Now type the commands
+
+vi conf/tomcat-users.xml
+
+<role rolename="manager-gui"/>
+<user username="admin" password="admin" roles="manager-gui"/>
+
+cd bin
+
+./shutdown.sh
+./startup.sh
+
+Select the war file and Click on deploy
